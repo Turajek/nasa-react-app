@@ -1,20 +1,17 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom'
 
 import Header from './components/ui/Header/Header'
 import Loader from './components/ui/Loader/Loader'
 import HomePage from './views/Home';
+import DetailsPage from './views/Details';
+import fetchNasaImages from './store/nasa-images/actions';
 import { connect } from 'react-redux';
-const DetailsPage = lazy(() => import("./views/Details"));
 
-function WaitingComponent(Component) {
-  return props => (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Component {...props} />
-    </Suspense>
-  );
-}
 class App extends React.Component {
+  componentWillMount() {
+    this.props.dispatch(fetchNasaImages("Earth"));
+  }
   render() {
     return (
       <div>
@@ -22,7 +19,7 @@ class App extends React.Component {
         {this.props.isLoading && <Loader />}
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route path="/:id" component={WaitingComponent(DetailsPage)} />
+          <Route path="/:id" component={DetailsPage} />
         </Switch>
       </div>
     );

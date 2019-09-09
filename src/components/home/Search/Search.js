@@ -15,20 +15,14 @@ class Search extends React.Component {
         this.props.dispatch(fetchNasaImages(this.state.searchValue));
     }
 
+
     render() {
-        const mappedImages = this.props.images.map((image, index) => {
-            if (image.links) {
-                return <img src={image.links[0].href} alt="nasa-result" key={index} />
-            } else {
-                return null;
-            }
-        })
+
         return (
             <div className="search">
                 <div className="search-intro">
                     <h2> Welcome in Nasa App!</h2>
                     <p>Just type something to find awesome photos</p>
-                    <div> {mappedImages}</div>
                 </div>
                 <form onSubmit={this.handleSubmit}>
                     <input value={this.state.searchValue} onChange={this.handleChange} />
@@ -38,9 +32,5 @@ class Search extends React.Component {
         );
     }
 }
-const mapStateToProps = store => {
-    return {
-        images: store.nasaImages.images
-    }
-}
-export default connect(mapStateToProps)(Search);
+
+export default connect()(Search);

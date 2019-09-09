@@ -1,11 +1,21 @@
 import React from 'react'
+import DetailsCart from '../components/details/DetailsCart/DetailsCart';
+import { connect } from 'react-redux';
+import fetchSingleImage from '../store/single-image/actions';
 
-export default function Details() {
-    return (
-        <div className="container">
-            <h1>Details Page</h1>
-            <p>
-            </p>
-        </div>
-    )
+
+class Details extends React.Component {
+
+    componentDidMount() {
+        this.props.dispatch(fetchSingleImage(this.props.match.params.id));
+    }
+    render() {
+        return (
+            <div>
+                <DetailsCart />
+            </div>
+        );
+    }
 }
+
+export default connect()(Details);
